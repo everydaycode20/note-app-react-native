@@ -11,7 +11,7 @@ My first attempt to build a mobile app using React Native using Expo framework. 
 $ npm install --global expo-cli
 
 # Clone this repository
-$ git clone git@github.com:everydaycode20/note-app-react-native.git
+$ git clone https://github.com/everydaycode20/note-app-react-native
 
 # Install dependencies
 $ npm install
