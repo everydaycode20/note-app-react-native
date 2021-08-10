@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableWithoutFeedback, StatusBar, FlatList, Animated, Easing } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableWithoutFeedback, StatusBar, FlatList, Animated, Easing, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {Context} from "./utils/context";
 import {NoteContext} from "./utils/change-note_context";
@@ -116,16 +116,19 @@ function NoteList({setDel, setNoteId, noteId, setDeleteMode, deleteMode}) {
 
     return (
         <SafeAreaView  style={styles.container}>
-            {saveNote.length !== 0 ? <FlatList keyExtractor={(item, index) => {return index.toString()}} showsVerticalScrollIndicator={false} style={{width: "80%"}} data={saveNote} renderItem={(renderItem, i) => {
-                let sbs = renderItem.item.value.substring(0,50);
+            {saveNote.length !== 0 ? <FlatList keyExtractor={(item, index) => {return index.toString()}} showsVerticalScrollIndicator={false} style={{width: "80%"}} data={saveNote} renderItem={({item, i}) => {
+                let sbs = item.value.substring(0,50);
+                let length = item.images.length;
                 return (
-                    <TouchableWithoutFeedback onLongPress={() => notePressed(renderItem.item.id)} key={renderItem.item.id} onPress={deleteMode ? () => selectNotes(renderItem.item.id) : () => getNote(renderItem.item.id)}>
-                        <Animated.View style={[styles.noteContainer, {backgroundColor: renderItem.item.color}, (renderItem.item.isSelected === true || renderItem.item.isSelected === false) && newId == renderItem.item.id ? trans.scaling() : null, renderItem.item.isSelected === true ? styles.borderNote : null]}>
-                            <View style={{height: "100%", flexDirection: "column", justifyContent: "space-between"}}>
+                    <TouchableWithoutFeedback onLongPress={() => notePressed(item.id)} key={item.id} onPress={deleteMode ? () => selectNotes(item.id) : () => getNote(item.id)}>
+                        <Animated.View style={[styles.noteContainer, {backgroundColor: item.color}, (item.isSelected === true || item.isSelected === false) && newId === item.id ? trans.scaling() : null, item.isSelected === true ? styles.borderNote : null]}>
+                            <View style={{height: "100%", flexDirection: "column", justifyContent: "space-between", width: length > 0 ? "60%" : "100%"}}>
                                 <Text style={styles.text}>{sbs} {sbs.length >= 50 && "..."}</Text>
-                                <Text style={{padding: 2, justifyContent: "space-between", opacity: 0.6}}>{renderItem.item.date}</Text>
+                                <Text style={{padding: 2, justifyContent: "space-between", opacity: 0.6}}>{item.date}</Text>
                             </View>
-                            
+                            {item.images.length > 0 && <View style={{width: "40%", justifyContent: "center", alignContent: "center", alignItems: "center"}}>
+                                <Image style={{width: 70, height: 70, borderRadius: 4}} source={{uri: item.images[0]}}/>
+                            </View>}
                         </Animated.View>
                     </TouchableWithoutFeedback>
                 )
@@ -149,6 +152,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 10,
         justifyContent: "flex-start",
+        flexDirection: "row",
     },
     scaleNote: {
         transform: [{ scale: 20 }],

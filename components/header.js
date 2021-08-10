@@ -2,8 +2,9 @@ import React, {useState, useEffect, useContext, useRef} from 'react';
 import { StyleSheet, Text, View, TouchableWithoutFeedback, StatusBar, Image, Animated } from 'react-native';
 import {Context} from "./utils/context";
 import {StoreData} from "./utils/async-storage";
-import { Easing, not } from 'react-native-reanimated';
+import { Easing } from 'react-native-reanimated';
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; 
 
 function Header({del, setDel, noteId, setNoteId, setDeleteMode}) {
     
@@ -97,7 +98,7 @@ function Header({del, setDel, noteId, setNoteId, setDeleteMode}) {
                 <Animated.View style={[styles.header, {flexDirection: 'row', justifyContent: 'flex-end', width: "100%"}]} >
                     <StatusBar style="auto"/>
                     <TouchableWithoutFeedback onPress={() => openSettings()} >
-                        <Image style={styles.settings} source={require("../assets/settings_black.png")}/> 
+                        <Ionicons name="settings-outline" size={30} color="black" />
                     </TouchableWithoutFeedback>
                 </Animated.View>
             </View>}

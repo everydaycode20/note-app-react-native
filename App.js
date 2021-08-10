@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+
 import Main from "./components/main";
 import ModalComp from "./components/modal";
 import Settings from "./components/settings";
+import Cam from './components/camera';
+import SelectedImage from './components/image';
+
 import {Context} from "./components/utils/context";
 import {NoteContext} from "./components/utils/change-note_context";
 import {FontSizeContext} from "./components/utils/font-size_context";
@@ -47,6 +51,8 @@ export default function App() {
               <Stack.Screen name="main" component={Main}/>
               <Stack.Screen name="add" component={ModalComp} options={horizontalAnimation}/>
               <Stack.Screen name="settings" component={Settings} options={horizontalAnimation}/>
+              <Stack.Screen name="camera" component={Cam} options={horizontalAnimation}/>
+              <Stack.Screen name="selected-image" component={SelectedImage} options={horizontalAnimation}/>
             </Stack.Navigator>
           </NavigationContainer>
         </FontSizeContext.Provider>
